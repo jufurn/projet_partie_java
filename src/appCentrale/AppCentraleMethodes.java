@@ -25,11 +25,7 @@ public class AppCentraleMethodes {
 		try {
 			con = DriverManager.getConnection(url, "postgres", "Zavo00041504349");
 			Class.forName("org.postgresql.Driver");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		 catch (SQLException e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -42,7 +38,7 @@ public class AppCentraleMethodes {
 		System.out.println("Veuillez entrer le nombre de place.");
 		int place = scanner.nextInt();
 		scanner.nextLine();
-		System.out.println("Veuillez spécifier si le local posséde de machines.(TRUE ou FALSE)");
+		System.out.println("Veuillez spï¿½cifier si le local possï¿½de de machines.(TRUE ou FALSE)");
 		String machine =scanner.nextLine();
 		
 		if(machine.contentEquals("FALSE")) {
@@ -59,7 +55,7 @@ public class AppCentraleMethodes {
 			appCentrale.setBoolean(3, presenceMachine);
 			
 			appCentrale.execute();
-			System.out.println("L'ajout a réussi. Voilà les informations du local : " + nomLocal +" "+ place +" "+ presenceMachine);
+			System.out.println("L'ajout a rï¿½ussi. Voilï¿½ les informations du local : " + nomLocal +" "+ place +" "+ presenceMachine);
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -79,7 +75,7 @@ public class AppCentraleMethodes {
 		System.out.println("Veuillez entrer le bloc d'examen. (ex : \"Bloc 1\")");
 		String blocString = scanner.nextLine();
 		
-		System.out.println("Veuillez spécifier si le local posséde de machines.(TRUE ou FALSE)");
+		System.out.println("Veuillez spï¿½cifier si le local possï¿½de de machines.(TRUE ou FALSE)");
 		String machine = scanner.nextLine();
 		
 		
@@ -90,7 +86,7 @@ public class AppCentraleMethodes {
 		}
 	
 		
-		System.out.println("Veuillez spécifier la durée de l'examen.(minutes)");
+		System.out.println("Veuillez spï¿½cifier la durï¿½e de l'examen.(minutes)");
 		
 		String duree = scanner.nextLine();
 	
@@ -105,7 +101,7 @@ public class AppCentraleMethodes {
 			appCentrale.setString(5,duree+"minutes");
 			
 			appCentrale.execute();
-			System.out.println("L'ajout a réussi. Voilà les informations de l'examen : " + codeExamen +" "+ nom +" "+" "+ blocString +" "+ presenceMachine+" "+duree);
+			System.out.println("L'ajout a rï¿½ussi. Voilï¿½ les informations de l'examen : " + codeExamen +" "+ nom +" "+" "+ blocString +" "+ presenceMachine+" "+duree);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
@@ -128,7 +124,7 @@ public class AppCentraleMethodes {
 			appCentrale.setString(1, codeExamen);
 			appCentrale.setString(2, heureDebut);
 			appCentrale.execute();
-			System.out.println("L'encodage a réussi. Voilà les informations de l'encodage : " + codeExamen+" "+" "+ heureDebut);
+			System.out.println("L'encodage a rï¿½ussi. Voilï¿½ les informations de l'encodage : " + codeExamen+" "+" "+ heureDebut);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
@@ -158,7 +154,7 @@ public class AppCentraleMethodes {
 			appCentrale.setString(1, nomLocal);
 			appCentrale.setString(2, codeExamen);
 			appCentrale.execute();
-			System.out.println("La réservation a réussi. Voilà les détailles. : " + nomLocal +" "+ codeExamen);
+			System.out.println("La rï¿½servation a rï¿½ussi. Voilï¿½ les dï¿½tailles. : " + nomLocal +" "+ codeExamen);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
@@ -191,10 +187,10 @@ public class AppCentraleMethodes {
 			rs = appCentrale.executeQuery();
 			while(rs.next()) {
 	          System.out.println("--------------------");
-	          System.out.println("Heure début : " + rs.getString(1));
+	          System.out.println("Heure dï¿½but : " + rs.getString(1));
 	          System.out.println("code examen : " + rs.getString(2));
 	          System.out.println("nom d'examen : " + rs.getString(3));
-	          System.out.println("nombre de local réservé : " + rs.getString(4));
+	          System.out.println("nombre de local rï¿½servï¿½ : " + rs.getString(4));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -229,7 +225,7 @@ public class AppCentraleMethodes {
 			 rs = appCentrale.executeQuery();
 			while(rs.next()) {
 	          System.out.println("--------------------");
-	          System.out.println("Heure début : " + rs.getString(1));
+	          System.out.println("Heure dï¿½but : " + rs.getString(1));
 	          System.out.println("code examen : " + rs.getString(2));
 	          System.out.println("nom d'examen : " + rs.getString(3));
 	          System.out.println("id local: " + rs.getString(4));
@@ -254,8 +250,8 @@ public class AppCentraleMethodes {
 	          System.out.println("nom d'examen : " + rs.getString(2));
 	          System.out.println("bloc : " + rs.getString(3));
 	          System.out.println("sur machine : " + rs.getBoolean(4));
-	          System.out.println("heure début : "+rs.getString(5));
-	          System.out.println("durée : "+rs.getString(6));
+	          System.out.println("heure dï¿½but : "+rs.getString(5));
+	          System.out.println("durï¿½e : "+rs.getString(6));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -274,7 +270,7 @@ public class AppCentraleMethodes {
 			while(rs.next()) {
 	          System.out.println("--------------------");
 	          System.out.println("code du bloc : " + rs.getString(1));
-	          System.out.println("nombre d'examen non réservé : " + rs.getString(2));
+	          System.out.println("nombre d'examen non rï¿½servï¿½ : " + rs.getString(2));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -292,12 +288,12 @@ public class AppCentraleMethodes {
 		System.out.println("[0] Quitter l'application");
 		System.out.println("[1] Ajouter un local.");
 		System.out.println("[2] Ajouter un examen.");
-		System.out.println("[3] Encoder heure de début d'un examen.");
+		System.out.println("[3] Encoder heure de dï¿½but d'un examen.");
 		System.out.println("[4] Reserver un local pour un examen.");
 		System.out.println("[5] Visualiser les examens d'un bloc.");
 		System.out.println("[6] Visualiser touts les examens d'un local.");
-		System.out.println("[7] Visualiser les examens qui ne sont pas complètement réservés");
-		System.out.println("[8] Visualiser le nombre d’examens pas encore complètement réservés pour chaque bloc.");
+		System.out.println("[7] Visualiser les examens qui ne sont pas complï¿½tement rï¿½servï¿½s");
+		System.out.println("[8] Visualiser le nombre dï¿½examens pas encore complï¿½tement rï¿½servï¿½s pour chaque bloc.");
 	}
 
 }
