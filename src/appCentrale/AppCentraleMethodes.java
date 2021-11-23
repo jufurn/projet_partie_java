@@ -23,93 +23,149 @@ public class AppCentraleMethodes {
 		con = null;
 	
 		try {
-			con = DriverManager.getConnection(url, "postgres", "Zavo00041504349");
+			con = DriverManager.getConnection(url, "postgres", "");
 			Class.forName("org.postgresql.Driver");
 		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-	public void ajouterLocal() {
-		Boolean presenceMachine = null;
-		System.out.println("Veuillez entrer le nom de local.");
-		String nomLocal = scanner.nextLine();
-		System.out.println("Veuillez entrer le nombre de place.");
-		int place = scanner.nextInt();
-		scanner.nextLine();
-		System.out.println("Veuillez sp�cifier si le local poss�de de machines.(TRUE ou FALSE)");
-		String machine =scanner.nextLine();
-		
-		if(machine.contentEquals("FALSE")) {
-			presenceMachine = false;
-		}else {
-			presenceMachine = true;
-		}
-	
-		
+
+	public void ajouterUe() {
+		System.out.println("Veuillez entrer le code de l'UE.");
+		String codeUe = scanner.nextLine();
+		System.out.println("Veuillez entrer le nom de l'UE.");
+		String nomUe = scanner.nextLine();
+		System.out.println("Veuillez entrer le bloc de l'UE.");
+		String blocUe = scanner.nextLine();
+		System.out.println("Veuillez entrer le nombre de credits de l'UE.");
+		String creditsUe = scanner.nextLine();
+
 		try {
-			PreparedStatement appCentrale = con.prepareStatement("SELECT projet.ajouterLocal(?,?,?)");
-			appCentrale.setString(1,nomLocal);
-			appCentrale.setInt(2,place);
-			appCentrale.setBoolean(3, presenceMachine);
-			
+			PreparedStatement appCentrale = con.prepareStatement("SELECT projet2021.ajouterUe(?,?,?,?)");
+			appCentrale.setString(1,codeUe);
+			appCentrale.setString(2,nomUe);
+			appCentrale.setInt(3,Integer.parseInt(codeUe));
+			appCentrale.setInt(4,Integer.parseInt(creditsUe));
+
 			appCentrale.execute();
-			System.out.println("L'ajout a r�ussi. Voil� les informations du local : " + nomLocal +" "+ place +" "+ presenceMachine);
-			
+			System.out.println("L'ajout a reussi. Voila les informations de l'UE : " + codeUe +" : "+ nomUe +" (Bloc : "+ blocUe + "; Credits : " + creditsUe);
+
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}finally {
 			System.out.println("\n");
 		}
 	}
-	
-	public void ajouterExamen() {
-		Boolean presenceMachine = null;
-		System.out.println("Veuillez entrer le code d'examen.");
-		String codeExamen = scanner.nextLine();
-		System.out.println("Veuillez entrer le nom d'examen");
-		String nom = scanner.nextLine();
-		System.out.println("Veuillez entrer le bloc d'examen. (ex : \"Bloc 1\")");
-		String blocString = scanner.nextLine();
-		
-		System.out.println("Veuillez sp�cifier si le local poss�de de machines.(TRUE ou FALSE)");
-		String machine = scanner.nextLine();
-		
-		
-		if(machine.contentEquals("FALSE")) {
-			presenceMachine = false;
-		}else {
-			presenceMachine = true;
-		}
-	
-		
-		System.out.println("Veuillez sp�cifier la dur�e de l'examen.(minutes)");
-		
-		String duree = scanner.nextLine();
-	
-		
+
+	public void ajouterPrerequis() {
+		System.out.println("Veuillez entrer le code de l'UE.");
+		String codeUe = scanner.nextLine();
+		System.out.println("Veuillez entrer le code de l'UE prerequis.");
+		String codePrerequis = scanner.nextLine();
+
 		try {
-			
-			PreparedStatement appCentrale = con.prepareStatement("SELECT projet.insererExamen(?,?,?,?,?::interval)");
-			appCentrale.setString(1, codeExamen);
-			appCentrale.setString(2, nom);
-			appCentrale.setString(3, blocString);
-			appCentrale.setBoolean(4, presenceMachine);
-			appCentrale.setString(5,duree+"minutes");
-			
+			PreparedStatement appCentrale = con.prepareStatement("SELECT projet2021.ajouterPrerequis(?,?)");
+			appCentrale.setString(1,codeUe);
+			appCentrale.setString(2,codePrerequis);
+
 			appCentrale.execute();
-			System.out.println("L'ajout a r�ussi. Voil� les informations de l'examen : " + codeExamen +" "+ nom +" "+" "+ blocString +" "+ presenceMachine+" "+duree);
+			System.out.println("L'ajout a reussi. Voila les informations du prerequis : " + codePrerequis + " est requis pour le cours " + codeUe);
+
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}finally {
+			System.out.println("\n");
+		}
+	}
+
+	public void ajouterEtudiant() {
+		System.out.println("Veuillez entrer le nom de l'etudiant.");
+		String nomEtu = scanner.nextLine();
+		System.out.println("Veuillez entrer le prenom de l'etudiant.");
+		String prenomEtu = scanner.nextLine();
+		System.out.println("Veuillez entrer l'email de l'etudiant.");
+		String emailEtu = scanner.nextLine();
+		System.out.println("Veuillez entrer le mot de passe de l'etudiant.");
+		String mdpEtu = scanner.nextLine();
+		System.out.println("Veuillez entrer le bloc de l'etudiant.");
+		String blocEtu = scanner.nextLine();
+
+		try {
+			PreparedStatement appCentrale = con.prepareStatement("SELECT projet2021.ajouterEtudiant(?,?,?,?,?)");
+			appCentrale.setString(1,nomEtu);
+			appCentrale.setString(2,prenomEtu);
+			appCentrale.setString(3,emailEtu);
+			appCentrale.setString(4,mdpEtu);
+			appCentrale.setInt(5,Integer.parseInt(blocEtu));
+
+			appCentrale.execute();
+			System.out.println("L'ajout a reussi. Voila les informations de l'etudiant : " + nomEtu + " " + prenomEtu + " (Bloc : " + blocEtu + ")\nemail : "+ emailEtu + "(mdp : " + mdpEtu + ")");
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}finally {
+			System.out.println("\n");
+		}
+	}
+
+	public void encoderUeValidee() {
+		System.out.println("Veuillez entrer l'email de l'etudiant.");
+		String emailEtu = scanner.nextLine();
+		System.out.println("Veuillez entrer le code de l'UE validee.");
+		String codeUe = scanner.nextLine();
+
+		try {
+			PreparedStatement appCentrale = con.prepareStatement("SELECT projet2021.encoderUeValidee(?,?)");
+			appCentrale.setString(1,emailEtu);
+			appCentrale.setString(2,codeUe);
+
+			appCentrale.execute();
+			System.out.println("L'ajout a reussi. Voila les informations de l'Ue validee : " + emailEtu + " a valide le cours " + codeUe);
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}finally {
+			System.out.println("\n");
+		}
+	}
+
+	public void visualiserEtudiantsDuBloc() {
+		System.out.println("Entrez le bloc dont vous souhaitez voir les etudiants.");
+		String blocEtu = scanner.nextLine();
+
+		try {
+			PreparedStatement appCentrale = con.prepareStatement("SELECT nom, prenom, credits_pae"
+					+ "	FROM projet.visualiserExamensBloc" + " WHERE bloc = " + blocEtu);
+			ResultSet rs = appCentrale.executeQuery();
+			while(rs.next()) {
+				System.out.println(rs.getString(1) + " " + rs.getString(2) + " (PAE : " + rs.getInt(3) + " credits)");
+			}
+		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}finally {
 			System.out.println("\n");
 		}
 	}
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	public void encoderHeureDebut(){
 		
 		System.out.println("Veuillez entrer le code d'examen.");
@@ -166,8 +222,8 @@ public class AppCentraleMethodes {
 	
 	public void visualiserExamenUnBloc() {
 		
-	System.out.println("Entrez le bloc dont examnes vous souhaitez voir. (ex : \"Bloc 1\")");
-	String blocString = scanner.nextLine();
+		System.out.println("Entrez le bloc dont examnes vous souhaitez voir. (ex : \"Bloc 1\")");
+		String blocString = scanner.nextLine();
 	
 	
 		

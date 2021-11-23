@@ -23,7 +23,7 @@ public class ApplicationCentrale {
 	
 		do {
 			methodes.afficherMenu();
-			System.out.println("Entrez un num�ro ");
+			System.out.println("Entrez un numero ");
 			selection = scanner.nextInt();
 
 			switch (selection) {
@@ -31,19 +31,19 @@ public class ApplicationCentrale {
 				System.out.println("Au revoir");
 				break;
 			case 1:
-				methodes.ajouterLocal();
+				methodes.ajouterUe();
 				break;
 			case 2:
-				methodes.ajouterExamen();
+				methodes.ajouterPrerequis();
 				break;
 			case 3:
-				methodes.encoderHeureDebut();
+				methodes.ajouterEtudiant();
 				break;
 			case 4:
-				methodes.reserverLocal();
+				methodes.encoderUeValidee();
 				break;
 			case 5:
-				methodes.visualiserExamenUnBloc();
+				methodes.visualiserEtudiantsDuBloc();
 				break;
 			case 6:
 				methodes.visualiserToutsExamensUnLocal();
