@@ -1,9 +1,6 @@
 package appUtilisateur;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Scanner;
 
 public class AppUtilisateurMethodes {
@@ -74,7 +71,8 @@ public class AppUtilisateurMethodes {
             PreparedStatement appUtilisateur = con.prepareStatement("SELECT code_ue, nom_ue " +
                     "FROM projet2021.VisualiserUeAjoutable WHERE id = ?");
             appUtilisateur.setInt(1,id_etudiant);
-            appUtilisateur.execute();
+            ResultSet result = appUtilisateur.executeQuery();
+            System.out.println("code_ue : "+result.getString(1)+" nom_ue : "+result.getString(2));
         }catch (SQLException e){
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -87,7 +85,24 @@ public class AppUtilisateurMethodes {
             PreparedStatement appUtilisateur = con.prepareStatement("SELECT code_ue, nom_ue, credit_ue, bloc_ue" +
                     " FROM projet2021.PAEEtudiant WHERE id = ?");
             appUtilisateur.setInt(1,id_etudiant);
+            ResultSet result = appUtilisateur.executeQuery();
+            System.out.println("code_ue : "+ result.getString(1));
+            System.out.println("nom_ue : "+ result.getString(2));
+            System.out.println("credit_ue : "+ result.getInt(3));
+            System.out.println("bloc_ue : "+ result.getInt(4));
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }finally {
+            System.out.println("\n");
+        }
+    }
+    public void reinitialiserPAEEtudiant(int id_etudiant){
+        try {
+            PreparedStatement appUtilisateur = con.prepareStatement("SELECT projet2021.reinitialiserPAEEtudiant(?)");
+            appUtilisateur.setInt(1,id_etudiant);
             appUtilisateur.execute();
+            System.out.println("Réinitialisation du PAE réussie !");
         }catch (SQLException e){
             System.out.println(e.getMessage());
             e.printStackTrace();
