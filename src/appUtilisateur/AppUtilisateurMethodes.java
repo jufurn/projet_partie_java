@@ -8,6 +8,11 @@ public class AppUtilisateurMethodes {
     String url;
     Connection con;
 
+    PreparedStatement appUtilisateur;
+    ResultSet res;
+
+    int id_etudiant = -1;
+
     public AppUtilisateurMethodes() {
         // creer connection
         url = "jdbc:postgresql://localhost:5432/projet";
@@ -20,14 +25,39 @@ public class AppUtilisateurMethodes {
             e.printStackTrace();
         }
     }
-    public void ajouterUeAuPAE(int id_etudiant){
+
+    public Boolean connection(){
+        System.out.println("Donnez votre email :");
+        String _email = scanner.nextLine();
+        System.out.println("Donner votre mot de passe : ");
+        String _mdp = scanner.nextLine();
+        try {
+            appUtilisateur = con.prepareStatement("SELECT id_etudiant FROM projet2021.etudiants " +
+                    "WHERE email = ? AND mot_de_passe = ?");
+            appUtilisateur.setString(1, _email);
+            appUtilisateur.setString(2, _mdp);
+            res = appUtilisateur.executeQuery();
+            if (res.next()) {
+                id_etudiant = res.getInt(1);
+                return true;
+            }
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }finally {
+            System.out.println("\n");
+        }
+        return false;
+    }
+
+    public void ajouterUeAuPAE(){
         System.out.println("Quel Ue souhaitez vous ajouter ? (Donnez le code)");
         String code = scanner.nextLine();
         try{
-            PreparedStatement appUtilisateur = con.prepareStatement("SELECT projet2021.ajouterUeEtudiant(?,?)");
+            appUtilisateur = con.prepareStatement("SELECT projet2021.ajouterUeEtudiant(?,?)");
             appUtilisateur.setInt(1,id_etudiant);
             appUtilisateur.setString(2,code);
-            appUtilisateur.execute();
+            res = appUtilisateur.executeQuery();
             System.out.println("Ajout réussit !");
         }catch (SQLException e){
             System.out.println(e.getMessage());
@@ -37,14 +67,14 @@ public class AppUtilisateurMethodes {
         }
     }
 
-    public void enleverUeAuPAE(int id_etudiant){
+    public void enleverUeAuPAE(){
         System.out.println("Quel Ue souhaitez vous enlever ? (Donnez le code)");
         String code = scanner.nextLine();
         try{
-            PreparedStatement appUtilisateur = con.prepareStatement("SELECT projet2021.enleverUEAPAEEtudiant(?,?)");
+            appUtilisateur = con.prepareStatement("SELECT projet2021.enleverUEAPAEEtudiant(?,?)");
             appUtilisateur.setInt(1,id_etudiant);
             appUtilisateur.setString(2,code);
-            appUtilisateur.execute();
+            res = appUtilisateur.executeQuery();
             System.out.println("Retrait réussit !");
         }catch (SQLException e){
             System.out.println(e.getMessage());
@@ -53,11 +83,11 @@ public class AppUtilisateurMethodes {
             System.out.println("\n");
         }
     }
-    public void validerPAE(int id_etudiant){
+    public void validerPAE(){
         try{
-            PreparedStatement appUtilisateur = con.prepareStatement("SELECT projet2021.validerPAEEtudiant(?)");
+            appUtilisateur = con.prepareStatement("SELECT projet2021.validerPAEEtudiant(?)");
             appUtilisateur.setInt(1,id_etudiant);
-            appUtilisateur.execute();
+            res = appUtilisateur.executeQuery();
             System.out.println("Validation réussie !");
         }catch (SQLException e){
             System.out.println(e.getMessage());
@@ -66,13 +96,13 @@ public class AppUtilisateurMethodes {
             System.out.println("\n");
         }
     }
-    public void visualiserUesAjoutables(int id_etudiant){
+    public void visualiserUesAjoutables(){
         try {
-            PreparedStatement appUtilisateur = con.prepareStatement("SELECT code_ue, nom_ue " +
+            appUtilisateur = con.prepareStatement("SELECT code_ue, nom_ue " +
                     "FROM projet2021.VisualiserUeAjoutable WHERE id = ?");
             appUtilisateur.setInt(1,id_etudiant);
-            ResultSet result = appUtilisateur.executeQuery();
-            System.out.println("code_ue : "+result.getString(1)+" nom_ue : "+result.getString(2));
+            res = appUtilisateur.executeQuery();
+            System.out.println("code_ue : "+res.getString(1)+" nom_ue : "+res.getString(2));
         }catch (SQLException e){
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -80,16 +110,16 @@ public class AppUtilisateurMethodes {
             System.out.println("\n");
         }
     }
-    public void visualiserPAEEtudiant(int id_etudiant){
+    public void visualiserPAEEtudiant(){
         try {
-            PreparedStatement appUtilisateur = con.prepareStatement("SELECT code_ue, nom_ue, credit_ue, bloc_ue" +
+            appUtilisateur = con.prepareStatement("SELECT code_ue, nom_ue, credit_ue, bloc_ue" +
                     " FROM projet2021.PAEEtudiant WHERE id = ?");
             appUtilisateur.setInt(1,id_etudiant);
-            ResultSet result = appUtilisateur.executeQuery();
-            System.out.println("code_ue : "+ result.getString(1));
-            System.out.println("nom_ue : "+ result.getString(2));
-            System.out.println("credit_ue : "+ result.getInt(3));
-            System.out.println("bloc_ue : "+ result.getInt(4));
+            res = appUtilisateur.executeQuery();
+            System.out.println("code_ue : "+ res.getString(1));
+            System.out.println("nom_ue : "+ res.getString(2));
+            System.out.println("credit_ue : "+ res.getInt(3));
+            System.out.println("bloc_ue : "+ res.getInt(4));
         }catch (SQLException e){
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -97,11 +127,11 @@ public class AppUtilisateurMethodes {
             System.out.println("\n");
         }
     }
-    public void reinitialiserPAEEtudiant(int id_etudiant){
+    public void reinitialiserPAEEtudiant(){
         try {
-            PreparedStatement appUtilisateur = con.prepareStatement("SELECT projet2021.reinitialiserPAEEtudiant(?)");
+            appUtilisateur = con.prepareStatement("SELECT projet2021.reinitialiserPAEEtudiant(?)");
             appUtilisateur.setInt(1,id_etudiant);
-            appUtilisateur.execute();
+            res = appUtilisateur.executeQuery();
             System.out.println("Réinitialisation du PAE réussie !");
         }catch (SQLException e){
             System.out.println(e.getMessage());
