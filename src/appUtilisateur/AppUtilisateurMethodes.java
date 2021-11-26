@@ -140,4 +140,17 @@ public class AppUtilisateurMethodes {
             System.out.println("\n");
         }
     }
+
+    public void afficherMenu() {
+        System.out.println("----------------------------");
+        System.out.println("-------Menu utilisateur-------");
+        System.out.println("----------------------------");
+        System.out.println("[0] Quitter l'application");
+        System.out.println("[1] Ajouter une UE au PAE.");
+        System.out.println("[2] enlever une Ue au PAE.");
+        System.out.println("[3] Valider le PAE.");
+        System.out.println("[4] Visualiser les Ues ajoutables.");
+        System.out.println("[5] Visualiser le PAE.");
+        System.out.println("[6] Réinitialiser le PAE.");
+    }
 }
