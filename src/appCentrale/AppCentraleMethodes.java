@@ -139,7 +139,7 @@ public class AppCentraleMethodes {
 
 		try {
 			PreparedStatement appCentrale = con.prepareStatement("SELECT nom, prenom, credits_pae"
-					+ "	FROM projet.visualiserExamensBloc" + " WHERE bloc = " + blocEtu);
+					+ "	FROM projet2021.visualiserExamensBloc" + " WHERE bloc = " + blocEtu);
 			ResultSet rs = appCentrale.executeQuery();
 			while(rs.next()) {
 				System.out.println(rs.getString(1) + " " + rs.getString(2) + " (PAE : " + rs.getInt(3) + " credits)");
@@ -151,185 +151,50 @@ public class AppCentraleMethodes {
 		}
 	}
 
+	public void visualiserCreditsPAEEtudiant() {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	public void encoderHeureDebut(){
-		
-		System.out.println("Veuillez entrer le code d'examen.");
-		
-		String codeExamen = scanner.nextLine();
-		System.out.println("Veuillez entrer l'heure de debut. (format : yyyy-mm-dd hh:mm:ss )");
-		String heureDebut = scanner.nextLine();
-		
 		try {
-			PreparedStatement 	appCentrale = con.prepareStatement("SELECT projet.encoderHeureDebutExamen(?,?::timestamp)");
-			
-			appCentrale.setString(1, codeExamen);
-			appCentrale.setString(2, heureDebut);
-			appCentrale.execute();
-			System.out.println("L'encodage a r�ussi. Voil� les informations de l'encodage : " + codeExamen+" "+" "+ heureDebut);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.out.println(e.getMessage());
-		}finally {
-			System.out.println("\n");
-		}
-	}
-	
-	public void reserverLocal() {
-		System.out.println("Veuillez entrer le nom du local.");
-		String nomLocal = scanner.nextLine();
-
-		System.out.println("Veuillez entrer le code examen");
-		String codeExamen = scanner.nextLine();
-		
-	
-		try {
-			PreparedStatement appCentrale = con.prepareStatement("SELECT id_local FROM projet.locaux  WHERE nom_local = ?");
-			appCentrale.setString(1, nomLocal);
-			ResultSet rs = appCentrale.executeQuery();
-			
-			if(!rs.next()) {
-				System.out.println("Le local entre n'existe pas. Veuillez le rentrer en pleines lettres (ex. : \"A024\")");
-			}
-			
-			appCentrale = con.prepareStatement("SELECT projet.reserverLocalPourExamen(?,?)");
-			appCentrale.setString(1, nomLocal);
-			appCentrale.setString(2, codeExamen);
-			appCentrale.execute();
-			System.out.println("La r�servation a r�ussi. Voil� les d�tailles. : " + nomLocal +" "+ codeExamen);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.out.println(e.getMessage());
-			
-		}finally {
-			System.out.println("\n");
-		}
-	}
-	
-	public void visualiserExamenUnBloc() {
-		
-		System.out.println("Entrez le bloc dont examnes vous souhaitez voir. (ex : \"Bloc 1\")");
-		String blocString = scanner.nextLine();
-	
-	
-		
-		try {
-			PreparedStatement appCentrale = con.prepareStatement("SELECT b.id_bloc FROM projet.blocs b WHERE b.code_bloc = ?");
-			appCentrale.setString(1, blocString);
-			ResultSet rs = appCentrale.executeQuery();
-			
-			if(!rs.next()) {
-				System.out.println("Le bloc entre n'existe pas. Veuillez le rentrer en pleines lettres (ex. : \"Bloc 1\")");
-			}
-			
-			int blocInt = rs.getInt(1);
-			
-			appCentrale = con.prepareStatement("SELECT \"heure_debut\", \"code_examen\", \"nom\", \"nombre_locaux\"\r\n"
-					+ "	FROM projet.visualiserExamensBloc\r\n"+ "WHERE \"bloc\"="+blocInt);
-			rs = appCentrale.executeQuery();
-			while(rs.next()) {
-	          System.out.println("--------------------");
-	          System.out.println("Heure d�but : " + rs.getString(1));
-	          System.out.println("code examen : " + rs.getString(2));
-	          System.out.println("nom d'examen : " + rs.getString(3));
-	          System.out.println("nombre de local r�serv� : " + rs.getString(4));
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.out.println(e.getMessage());
-		}finally {
-			System.out.println("\n");
-		}
-	}
-	
-	 
-
-	
-	public void visualiserToutsExamensUnLocal() {
-		System.out.println("Veuillez entrer le nom du local.");
-		String nomLocal = scanner.nextLine();
-		try {
-			
-			PreparedStatement appCentrale = con.prepareStatement("SELECT id_local FROM projet.locaux WHERE nom_local = ?");
-			appCentrale.setString(1, nomLocal);
-			ResultSet rs = appCentrale.executeQuery();
-			
-			if(!rs.next()) {
-				System.out.println("Le local entre n'existe pas. Veuillez le rentrer en pleines lettres (ex. : \"A024\")");
-			}
-			
-			int idLocal = rs.getInt(1);
-			
-			
-			appCentrale = con.prepareStatement("SELECT \"heure_debut\",\"code_examen\",\"nom\",\"id_local\"\r\n"
-					+ "FROM projet.visualiserExamensLocal\r\n"
-					+ "WHERE \"id_local\"="+idLocal);
-			 rs = appCentrale.executeQuery();
-			while(rs.next()) {
-	          System.out.println("--------------------");
-	          System.out.println("Heure d�but : " + rs.getString(1));
-	          System.out.println("code examen : " + rs.getString(2));
-	          System.out.println("nom d'examen : " + rs.getString(3));
-	          System.out.println("id local: " + rs.getString(4));
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.out.println(e.getMessage());
-		}finally {
-			System.out.println("\n");
-		}
-	}
-	
-	public void visualiserExamenPasCompletementReserves() {
-		
-		try {
-			PreparedStatement appCentrale = con.prepareStatement("SELECT \"code_examen\",\"nom\",\"bloc\",\"sur_machine\",\"heure_debut\",\"duree\"\r\n"
-					+ "		FROM projet.visualiserExamensPasCompletementReserves");
+			PreparedStatement appCentrale = con.prepareStatement("SELECT nom, prenom, bloc, credits_pae"
+					+ "	FROM projet2021.visualiserCreditsPAEEtudiant");
 			ResultSet rs = appCentrale.executeQuery();
 			while(rs.next()) {
-	          System.out.println("--------------------");
-	          System.out.println("code d'examen : " + rs.getString(1));
-	          System.out.println("nom d'examen : " + rs.getString(2));
-	          System.out.println("bloc : " + rs.getString(3));
-	          System.out.println("sur machine : " + rs.getBoolean(4));
-	          System.out.println("heure d�but : "+rs.getString(5));
-	          System.out.println("dur�e : "+rs.getString(6));
+				System.out.println(rs.getString(1) + " " + rs.getString(2) + " (Bloc " + rs.getInt(3) + ") (PAE : " + rs.getInt(4) + " credits)");
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
 		}finally {
 			System.out.println("\n");
 		}
-		
 	}
-	
-	public void visualiserNbrExamenPasCompletementReserve() {
+
+	public void visualiserEtudiantsPAEPasValide() {
+
 		try {
-			PreparedStatement appCentrale = con.prepareStatement("SELECT \"code_bloc\",\"examens_non_reserves\"\r\n"
-					+ "		FROM projet.visualiserExamensPasCompletementReservesParBloc");
+			PreparedStatement appCentrale = con.prepareStatement("SELECT nom, prenom, bloc, credits_valides"
+					+ "	FROM projet2021.visualiserEtudiantsPAEPasValide");
 			ResultSet rs = appCentrale.executeQuery();
 			while(rs.next()) {
-	          System.out.println("--------------------");
-	          System.out.println("code du bloc : " + rs.getString(1));
-	          System.out.println("nombre d'examen non r�serv� : " + rs.getString(2));
+				System.out.println(rs.getString(1) + " " + rs.getString(2) + " (Credits valides : " + rs.getInt(3) + " credits)");
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+		}finally {
+			System.out.println("\n");
+		}
+	}
+
+	public void visualiserUesDuBloc() {
+		System.out.println("Entrez le bloc dont vous souhaitez voir les ues.");
+		String blocEtu = scanner.nextLine();
+
+		try {
+			PreparedStatement appCentrale = con.prepareStatement("SELECT code_ue, nom, nbr_inscrits"
+					+ "	FROM projet2021.visualiserUesDuBloc" + " WHERE bloc = " + blocEtu);
+			ResultSet rs = appCentrale.executeQuery();
+			while(rs.next()) {
+				System.out.println(rs.getString(1) + " : " + rs.getString(2) + " (Inscrits : " + rs.getInt(3) + ")");
+			}
+		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}finally {
 			System.out.println("\n");
@@ -342,14 +207,14 @@ public class AppCentraleMethodes {
 		System.out.println("-------Menu principal-------");
 		System.out.println("----------------------------");
 		System.out.println("[0] Quitter l'application");
-		System.out.println("[1] Ajouter un local.");
-		System.out.println("[2] Ajouter un examen.");
-		System.out.println("[3] Encoder heure de d�but d'un examen.");
-		System.out.println("[4] Reserver un local pour un examen.");
-		System.out.println("[5] Visualiser les examens d'un bloc.");
-		System.out.println("[6] Visualiser touts les examens d'un local.");
-		System.out.println("[7] Visualiser les examens qui ne sont pas compl�tement r�serv�s");
-		System.out.println("[8] Visualiser le nombre d�examens pas encore compl�tement r�serv�s pour chaque bloc.");
+		System.out.println("[1] Ajouter une UE.");
+		System.out.println("[2] Ajouter un prerequis a un cours.");
+		System.out.println("[3] Ajouter un etudiant.");
+		System.out.println("[4] Encoder une UE validee a un etudiant.");
+		System.out.println("[5] Visualiser les etudiants d'un bloc.");
+		System.out.println("[6] Visualiser les credits du pae de chaque etudiants.");
+		System.out.println("[7] Visualiser les etudiants avec un PAE pas encore valide");
+		System.out.println("[8] Visualiser les UEs d'un bloc.");
 	}
 
 }

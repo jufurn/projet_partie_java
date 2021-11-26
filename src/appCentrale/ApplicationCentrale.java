@@ -46,13 +46,13 @@ public class ApplicationCentrale {
 				methodes.visualiserEtudiantsDuBloc();
 				break;
 			case 6:
-				methodes.visualiserToutsExamensUnLocal();
+				methodes.visualiserCreditsPAEEtudiant();
 				break;
 			case 7:
-				methodes.visualiserExamenPasCompletementReserves();
+				methodes.visualiserEtudiantsPAEPasValide();
 				break;
 			case 8:
-				methodes.visualiserNbrExamenPasCompletementReserve();
+				methodes.visualiserUesDuBloc();
 				break;
 			default:
 				System.out.println("Entrez un entier entre 0 et 8");
