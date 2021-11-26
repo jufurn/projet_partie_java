@@ -39,6 +39,7 @@ public class AppUtilisateurMethodes {
             res = appUtilisateur.executeQuery();
             if (res.next()) {
                 id_etudiant = res.getInt(1);
+                System.out.println("Connection réussie !");
                 return true;
             }
         }catch (SQLException e){
@@ -47,6 +48,7 @@ public class AppUtilisateurMethodes {
         }finally {
             System.out.println("\n");
         }
+        System.out.println("Connection échouée : email ou mot de passe incorrect !\n");
         return false;
     }
 

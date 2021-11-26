@@ -16,9 +16,8 @@ public class AppUtilisateur {
 		//pour la selection de methodes
 		int selection;
 		AppUtilisateurMethodes methodes = new AppUtilisateurMethodes();
-		while (!methodes.connection()){
-			System.out.println("Connection échouée, email ou mot de passe non valide");
-		}
+		while (!methodes.connection());
+
 		System.out.println("Bienvenue dans l'application utilisateur!");
 
 		do {
