@@ -54,6 +54,8 @@ public class ApplicationCentrale {
 			case 8:
 				methodes.visualiserUesDuBloc();
 				break;
+			case 9:
+				methodes.initDemo();
 			default:
 				System.out.println("Entrez un entier entre 0 et 8");
 				break;

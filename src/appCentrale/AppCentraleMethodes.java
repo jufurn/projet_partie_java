@@ -1,5 +1,7 @@
 package appCentrale;
 
+import bcrypt.BCrypt;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -16,6 +18,7 @@ public class AppCentraleMethodes {
 	Scanner scanner = new Scanner(System.in);
 	String url;
 	Connection con;
+	PreparedStatement appCentrale;
 	
 	public AppCentraleMethodes() {
 		// creer connection
@@ -41,7 +44,7 @@ public class AppCentraleMethodes {
 		String creditsUe = scanner.nextLine();
 
 		try {
-			PreparedStatement appCentrale = con.prepareStatement("SELECT projet2021.ajouterUe(?,?,?,?)");
+			appCentrale = con.prepareStatement("SELECT projet2021.ajouterUe(?,?,?,?)");
 			appCentrale.setString(1,codeUe);
 			appCentrale.setString(2,nomUe);
 			appCentrale.setInt(3,Integer.parseInt(codeUe));
@@ -65,7 +68,7 @@ public class AppCentraleMethodes {
 		String codePrerequis = scanner.nextLine();
 
 		try {
-			PreparedStatement appCentrale = con.prepareStatement("SELECT projet2021.ajouterPrerequis(?,?)");
+			appCentrale = con.prepareStatement("SELECT projet2021.ajouterPrerequis(?,?)");
 			appCentrale.setString(1,codeUe);
 			appCentrale.setString(2,codePrerequis);
 
@@ -93,7 +96,7 @@ public class AppCentraleMethodes {
 		String blocEtu = scanner.nextLine();
 
 		try {
-			PreparedStatement appCentrale = con.prepareStatement("SELECT projet2021.ajouterEtudiant(?,?,?,?,?)");
+			appCentrale = con.prepareStatement("SELECT projet2021.ajouterEtudiant(?,?,?,?,?)");
 			appCentrale.setString(1,nomEtu);
 			appCentrale.setString(2,prenomEtu);
 			appCentrale.setString(3,emailEtu);
@@ -118,7 +121,7 @@ public class AppCentraleMethodes {
 		String codeUe = scanner.nextLine();
 
 		try {
-			PreparedStatement appCentrale = con.prepareStatement("SELECT projet2021.encoderUeValidee(?,?)");
+			appCentrale = con.prepareStatement("SELECT projet2021.encoderUeValidee(?,?)");
 			appCentrale.setString(1,emailEtu);
 			appCentrale.setString(2,codeUe);
 
@@ -138,7 +141,7 @@ public class AppCentraleMethodes {
 		String blocEtu = scanner.nextLine();
 
 		try {
-			PreparedStatement appCentrale = con.prepareStatement("SELECT nom, prenom, credits_pae"
+			appCentrale = con.prepareStatement("SELECT nom, prenom, credits_pae"
 					+ "	FROM projet2021.visualiserExamensBloc" + " WHERE bloc = " + blocEtu);
 			ResultSet rs = appCentrale.executeQuery();
 			while(rs.next()) {
@@ -154,7 +157,7 @@ public class AppCentraleMethodes {
 	public void visualiserCreditsPAEEtudiant() {
 
 		try {
-			PreparedStatement appCentrale = con.prepareStatement("SELECT nom, prenom, bloc, credits_pae"
+			appCentrale = con.prepareStatement("SELECT nom, prenom, bloc, credits_pae"
 					+ "	FROM projet2021.visualiserCreditsPAEEtudiant");
 			ResultSet rs = appCentrale.executeQuery();
 			while(rs.next()) {
@@ -170,7 +173,7 @@ public class AppCentraleMethodes {
 	public void visualiserEtudiantsPAEPasValide() {
 
 		try {
-			PreparedStatement appCentrale = con.prepareStatement("SELECT nom, prenom, bloc, credits_valides"
+			appCentrale = con.prepareStatement("SELECT nom, prenom, bloc, credits_valides"
 					+ "	FROM projet2021.visualiserEtudiantsPAEPasValide");
 			ResultSet rs = appCentrale.executeQuery();
 			while(rs.next()) {
@@ -188,7 +191,7 @@ public class AppCentraleMethodes {
 		String blocEtu = scanner.nextLine();
 
 		try {
-			PreparedStatement appCentrale = con.prepareStatement("SELECT code_ue, nom, nbr_inscrits"
+			appCentrale = con.prepareStatement("SELECT code_ue, nom, nbr_inscrits"
 					+ "	FROM projet2021.visualiserUesDuBloc" + " WHERE bloc = " + blocEtu);
 			ResultSet rs = appCentrale.executeQuery();
 			while(rs.next()) {
@@ -217,4 +220,44 @@ public class AppCentraleMethodes {
 		System.out.println("[8] Visualiser les UEs d'un bloc.");
 	}
 
+	public void initDemo() {
+		String sel = BCrypt.gensalt();
+
+		try {
+			String inscriptionMdpCrypt = BCrypt.hashpw("Azerty123", sel);
+			appCentrale = con.prepareStatement("SELECT projet2021.ajouterEtudiant(?, ?, ?, ?);");
+			appCentrale.setString(1, "Cambron");
+			appCentrale.setString(2, "Isabelle");
+			appCentrale.setString(3, "isabelle.cambron@student.vinci.be");
+			appCentrale.setString(4, inscriptionMdpCrypt);
+			appCentrale.execute();
+
+			appCentrale = con.prepareStatement("SELECT projet2021.ajouterEtudiant(?, ?, ?, ?);");
+			appCentrale.setString(1, "Damas");
+			appCentrale.setString(2, "Christophe");
+			appCentrale.setString(3, "christophe.damas@student.vinci.be");
+			appCentrale.setString(4, inscriptionMdpCrypt);
+			appCentrale.execute();
+
+			appCentrale = con.prepareStatement("SELECT projet2021.ajouterEtudiant(?, ?, ?, ?);");
+			appCentrale.setString(1, "Ferneeuw");
+			appCentrale.setString(2, "Stephanie");
+			appCentrale.setString(3, "stephanie.ferneeuw@student.vinci.be");
+			appCentrale.setString(4, inscriptionMdpCrypt);
+			appCentrale.execute();
+
+			appCentrale = con.prepareStatement("SELECT projet2021.ajouterEtudiant(?, ?, ?, ?);");
+			appCentrale.setString(1, "Vander Meulen");
+			appCentrale.setString(2, "Jose");
+			appCentrale.setString(3, "jose.vandermeulen@student.vinci.be");
+			appCentrale.setString(4, inscriptionMdpCrypt);
+			appCentrale.execute();
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}finally {
+			System.out.println("ok");
+			System.out.println("\n");
+		}
+	}
 }
