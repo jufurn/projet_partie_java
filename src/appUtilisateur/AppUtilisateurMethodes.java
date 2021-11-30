@@ -22,7 +22,7 @@ public class AppUtilisateurMethodes {
             con = DriverManager.getConnection(url, "postgres", "");
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -44,7 +44,6 @@ public class AppUtilisateurMethodes {
             }
         }catch (SQLException e){
             System.out.println(e.getMessage());
-            e.printStackTrace();
         }finally {
             System.out.println("\n");
         }
@@ -63,7 +62,6 @@ public class AppUtilisateurMethodes {
             System.out.println("Ajout réussit !");
         }catch (SQLException e){
             System.out.println(e.getMessage());
-            e.printStackTrace();
         }finally {
             System.out.println("\n");
         }
@@ -80,7 +78,6 @@ public class AppUtilisateurMethodes {
             System.out.println("Retrait réussit !");
         }catch (SQLException e){
             System.out.println(e.getMessage());
-            e.printStackTrace();
         }finally {
             System.out.println("\n");
         }
@@ -93,7 +90,6 @@ public class AppUtilisateurMethodes {
             System.out.println("Validation réussie !");
         }catch (SQLException e){
             System.out.println(e.getMessage());
-            e.printStackTrace();
         }finally {
             System.out.println("\n");
         }
@@ -107,7 +103,6 @@ public class AppUtilisateurMethodes {
             System.out.println("code_ue : "+res.getString(1)+" nom_ue : "+res.getString(2));
         }catch (SQLException e){
             System.out.println(e.getMessage());
-            e.printStackTrace();
         }finally {
             System.out.println("\n");
         }
@@ -124,7 +119,6 @@ public class AppUtilisateurMethodes {
             System.out.println("bloc_ue : "+ res.getInt(4));
         }catch (SQLException e){
             System.out.println(e.getMessage());
-            e.printStackTrace();
         }finally {
             System.out.println("\n");
         }
@@ -137,7 +131,6 @@ public class AppUtilisateurMethodes {
             System.out.println("Réinitialisation du PAE réussie !");
         }catch (SQLException e){
             System.out.println(e.getMessage());
-            e.printStackTrace();
         }finally {
             System.out.println("\n");
         }

@@ -29,7 +29,7 @@ public class AppCentraleMethodes {
 			con = DriverManager.getConnection(url, "postgres", "");
 			Class.forName("org.postgresql.Driver");
 		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 	}
 
@@ -55,7 +55,6 @@ public class AppCentraleMethodes {
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			e.printStackTrace();
 		}finally {
 			System.out.println("\n");
 		}
@@ -77,7 +76,6 @@ public class AppCentraleMethodes {
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			e.printStackTrace();
 		}finally {
 			System.out.println("\n");
 		}
@@ -108,7 +106,6 @@ public class AppCentraleMethodes {
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			e.printStackTrace();
 		}finally {
 			System.out.println("\n");
 		}
@@ -130,7 +127,6 @@ public class AppCentraleMethodes {
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			e.printStackTrace();
 		}finally {
 			System.out.println("\n");
 		}
