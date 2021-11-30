@@ -220,6 +220,18 @@ public class AppCentraleMethodes {
 		String sel = BCrypt.gensalt();
 
 		try {
+			//Prérequis
+			appCentrale = con.prepareStatement("SELECT projet2021.ajouterPrerequis(?,?)");
+			appCentrale.setString(1,"BINV21");
+			appCentrale.setString(2,"BINV11");
+			appCentrale.execute();
+
+			appCentrale = con.prepareStatement("SELECT projet2021.ajouterPrerequis(?,?)");
+			appCentrale.setString(1,"BINV32");
+			appCentrale.setString(2,"BINV21");
+
+			appCentrale.execute();
+			//Inscription des étudiants
 			String inscriptionMdpCrypt = BCrypt.hashpw("Azerty123", sel);
 
 			appCentrale = con.prepareStatement("SELECT projet2021.ajouterEtudiant(?, ?, ?, ?);");
