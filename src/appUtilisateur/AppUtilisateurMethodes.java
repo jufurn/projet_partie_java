@@ -15,11 +15,11 @@ public class AppUtilisateurMethodes {
 
     public AppUtilisateurMethodes() {
         // creer connection
-        url = "jdbc:postgresql://localhost:5432/projet";
+        url = "jdbc:postgresql://localhost:5432/postgres";
         con = null;
 
         try {
-            con = DriverManager.getConnection(url, "postgres", "Zavo00041504349");
+            con = DriverManager.getConnection(url, "postgres", "");
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();

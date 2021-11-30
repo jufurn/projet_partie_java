@@ -22,7 +22,7 @@ public class AppCentraleMethodes {
 	
 	public AppCentraleMethodes() {
 		// creer connection
-		url = "jdbc:postgresql://localhost:5432/projet";
+		url = "jdbc:postgresql://localhost:5432/postgres";
 		con = null;
 	
 		try {
