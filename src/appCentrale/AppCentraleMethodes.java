@@ -47,11 +47,11 @@ public class AppCentraleMethodes {
 			appCentrale = con.prepareStatement("SELECT projet2021.ajouterUe(?,?,?,?)");
 			appCentrale.setString(1,codeUe);
 			appCentrale.setString(2,nomUe);
-			appCentrale.setInt(3,Integer.parseInt(codeUe));
+			appCentrale.setInt(3,Integer.parseInt(blocUe));
 			appCentrale.setInt(4,Integer.parseInt(creditsUe));
 
 			appCentrale.execute();
-			System.out.println("L'ajout a reussi. Voila les informations de l'UE : " + codeUe +" : "+ nomUe +" (Bloc : "+ blocUe + "; Credits : " + creditsUe);
+			System.out.println("L'ajout a reussi. Voila les informations de l'UE : " + codeUe +" : "+ nomUe +" Bloc : "+ blocUe + " Credits : " + creditsUe);
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -225,18 +225,20 @@ public class AppCentraleMethodes {
 
 		try {
 			String inscriptionMdpCrypt = BCrypt.hashpw("Azerty123", sel);
-			appCentrale = con.prepareStatement("SELECT projet2021.ajouterEtudiant(?, ?, ?, ?);");
-			appCentrale.setString(1, "Cambron");
-			appCentrale.setString(2, "Isabelle");
-			appCentrale.setString(3, "isabelle.cambron@student.vinci.be");
-			appCentrale.setString(4, inscriptionMdpCrypt);
-			appCentrale.execute();
 
 			appCentrale = con.prepareStatement("SELECT projet2021.ajouterEtudiant(?, ?, ?, ?);");
 			appCentrale.setString(1, "Damas");
 			appCentrale.setString(2, "Christophe");
 			appCentrale.setString(3, "christophe.damas@student.vinci.be");
 			appCentrale.setString(4, inscriptionMdpCrypt);
+			appCentrale.execute();
+			appCentrale = con.prepareStatement("SELECT projet2021.encoderUeValidee(?,?)");
+			appCentrale.setString(1, "christophe.damas@student.vinci.be");
+			appCentrale.setString(2, "BINV12");
+			appCentrale.execute();
+			appCentrale = con.prepareStatement("SELECT projet2021.encoderUeValidee(?,?)");
+			appCentrale.setString(1, "christophe.damas@student.vinci.be");
+			appCentrale.setString(2, "BINV13");
 			appCentrale.execute();
 
 			appCentrale = con.prepareStatement("SELECT projet2021.ajouterEtudiant(?, ?, ?, ?);");
@@ -245,12 +247,59 @@ public class AppCentraleMethodes {
 			appCentrale.setString(3, "stephanie.ferneeuw@student.vinci.be");
 			appCentrale.setString(4, inscriptionMdpCrypt);
 			appCentrale.execute();
+			appCentrale = con.prepareStatement("SELECT projet2021.encoderUeValidee(?,?)");
+			appCentrale.setString(1, "stephanie.ferneeuw@student.vinci.be");
+			appCentrale.setString(2, "BINV11");
+			appCentrale.execute();
+			appCentrale = con.prepareStatement("SELECT projet2021.encoderUeValidee(?,?)");
+			appCentrale.setString(1, "stephanie.ferneeuw@student.vinci.be");
+			appCentrale.setString(2, "BINV12");
+			appCentrale.execute();
 
 			appCentrale = con.prepareStatement("SELECT projet2021.ajouterEtudiant(?, ?, ?, ?);");
 			appCentrale.setString(1, "Vander Meulen");
 			appCentrale.setString(2, "Jose");
 			appCentrale.setString(3, "jose.vandermeulen@student.vinci.be");
 			appCentrale.setString(4, inscriptionMdpCrypt);
+			appCentrale.execute();
+			appCentrale = con.prepareStatement("SELECT projet2021.encoderUeValidee(?,?)");
+			appCentrale.setString(1, "jose.vandermeulen@student.vinci.be");
+			appCentrale.setString(2, "BINV11");
+			appCentrale.execute();
+			appCentrale = con.prepareStatement("SELECT projet2021.encoderUeValidee(?,?)");
+			appCentrale.setString(1, "jose.vandermeulen@student.vinci.be");
+			appCentrale.setString(2, "BINV12");
+			appCentrale.execute();
+			appCentrale = con.prepareStatement("SELECT projet2021.encoderUeValidee(?,?)");
+			appCentrale.setString(1, "jose.vandermeulen@student.vinci.be");
+			appCentrale.setString(2, "BINV13");
+			appCentrale.execute();
+
+			appCentrale = con.prepareStatement("SELECT projet2021.ajouterEtudiant(?, ?, ?, ?);");
+			appCentrale.setString(1, "Leconte");
+			appCentrale.setString(2, "Emeline");
+			appCentrale.setString(3, "Emeline.Leconte@student.vinci.be");
+			appCentrale.setString(4, inscriptionMdpCrypt);
+			appCentrale.execute();
+			appCentrale = con.prepareStatement("SELECT projet2021.encoderUeValidee(?,?)");
+			appCentrale.setString(1, "Emeline.Leconte@student.vinci.be");
+			appCentrale.setString(2, "BINV11");
+			appCentrale.execute();
+			appCentrale = con.prepareStatement("SELECT projet2021.encoderUeValidee(?,?)");
+			appCentrale.setString(1, "Emeline.Leconte@student.vinci.be");
+			appCentrale.setString(2, "BINV12");
+			appCentrale.execute();
+			appCentrale = con.prepareStatement("SELECT projet2021.encoderUeValidee(?,?)");
+			appCentrale.setString(1, "Emeline.Leconte@student.vinci.be");
+			appCentrale.setString(2, "BINV13");
+			appCentrale.execute();
+			appCentrale = con.prepareStatement("SELECT projet2021.encoderUeValidee(?,?)");
+			appCentrale.setString(1, "Emeline.Leconte@student.vinci.be");
+			appCentrale.setString(2, "BINV21");
+			appCentrale.execute();
+			appCentrale = con.prepareStatement("SELECT projet2021.encoderUeValidee(?,?)");
+			appCentrale.setString(1, "Emeline.Leconte@student.vinci.be");
+			appCentrale.setString(2, "BINV32");
 			appCentrale.execute();
 
 		} catch (SQLException e) {

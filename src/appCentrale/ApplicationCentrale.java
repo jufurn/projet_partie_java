@@ -20,7 +20,10 @@ public class ApplicationCentrale {
 		AppCentraleMethodes methodes = new AppCentraleMethodes();
 
 		System.out.println("Bienvenue dans l'application centrale!");
-	
+
+		//initialisation de la demo
+		methodes.initDemo();
+
 		do {
 			methodes.afficherMenu();
 			System.out.println("Entrez un numero ");
