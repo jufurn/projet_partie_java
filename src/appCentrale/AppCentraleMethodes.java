@@ -139,7 +139,7 @@ public class AppCentraleMethodes {
 
 		try {
 			appCentrale = con.prepareStatement("SELECT nom, prenom, credits_pae"
-					+ "	FROM projet2021.visualiserExamensBloc" + " WHERE bloc = " + blocEtu);
+					+ "	FROM projet2021.visualiserEtudiantsDuBloc" + " WHERE bloc = " + blocEtu);
 			ResultSet rs = appCentrale.executeQuery();
 			while(rs.next()) {
 				System.out.println(rs.getString(1) + " " + rs.getString(2) + " (PAE : " + rs.getInt(3) + " credits)");
