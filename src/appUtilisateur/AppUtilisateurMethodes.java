@@ -108,7 +108,8 @@ public class AppUtilisateurMethodes {
                     "FROM projet2021.VisualiserUeAjoutable WHERE id = ?");
             appUtilisateur.setInt(1,id_etudiant);
             res = appUtilisateur.executeQuery();
-            System.out.println("code_ue : "+res.getString(1)+" nom_ue : "+res.getString(2));
+            if(res.next())
+                System.out.println("code_ue : "+res.getString(1)+" nom_ue : "+res.getString(2));
         }catch (SQLException e){
             System.out.println(e.getMessage());
         }finally {
