@@ -19,6 +19,8 @@ public class AppCentraleMethodes {
 	String url;
 	Connection con;
 	PreparedStatement appCentrale;
+
+	String sel = BCrypt.gensalt();
 	
 	public AppCentraleMethodes() {
 		// creer connection
@@ -89,20 +91,18 @@ public class AppCentraleMethodes {
 		System.out.println("Veuillez entrer l'email de l'etudiant.");
 		String emailEtu = scanner.nextLine();
 		System.out.println("Veuillez entrer le mot de passe de l'etudiant.");
-		String mdpEtu = scanner.nextLine();
-		System.out.println("Veuillez entrer le bloc de l'etudiant.");
-		String blocEtu = scanner.nextLine();
+		String mdp = scanner.nextLine();
+		String mdpEtu = BCrypt.hashpw(mdp, sel);
 
 		try {
-			appCentrale = con.prepareStatement("SELECT projet2021.ajouterEtudiant(?,?,?,?,?)");
+			appCentrale = con.prepareStatement("SELECT projet2021.ajouterEtudiant(?,?,?,?)");
 			appCentrale.setString(1,nomEtu);
 			appCentrale.setString(2,prenomEtu);
 			appCentrale.setString(3,emailEtu);
 			appCentrale.setString(4,mdpEtu);
-			appCentrale.setInt(5,Integer.parseInt(blocEtu));
 
 			appCentrale.execute();
-			System.out.println("L'ajout a reussi. Voila les informations de l'etudiant : " + nomEtu + " " + prenomEtu + " (Bloc : " + blocEtu + ")\nemail : "+ emailEtu + "(mdp : " + mdpEtu + ")");
+			System.out.println("L'ajout a reussi. Voila les informations de l'etudiant : " + nomEtu + " " + prenomEtu + "email : "+ emailEtu + "mdp : " + mdpEtu);
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -217,7 +217,6 @@ public class AppCentraleMethodes {
 	}
 
 	public void initDemo() {
-		String sel = BCrypt.gensalt();
 
 		try {
 			//Prérequis
@@ -286,27 +285,27 @@ public class AppCentraleMethodes {
 			appCentrale = con.prepareStatement("SELECT projet2021.ajouterEtudiant(?, ?, ?, ?);");
 			appCentrale.setString(1, "Leconte");
 			appCentrale.setString(2, "Emeline");
-			appCentrale.setString(3, "Emeline.Leconte@student.vinci.be");
+			appCentrale.setString(3, "emeline.Leconte@student.vinci.be");
 			appCentrale.setString(4, inscriptionMdpCrypt);
 			appCentrale.execute();
 			appCentrale = con.prepareStatement("SELECT projet2021.encoderUeValidee(?,?)");
-			appCentrale.setString(1, "Emeline.Leconte@student.vinci.be");
+			appCentrale.setString(1, "emeline.Leconte@student.vinci.be");
 			appCentrale.setString(2, "BINV11");
 			appCentrale.execute();
 			appCentrale = con.prepareStatement("SELECT projet2021.encoderUeValidee(?,?)");
-			appCentrale.setString(1, "Emeline.Leconte@student.vinci.be");
+			appCentrale.setString(1, "emeline.Leconte@student.vinci.be");
 			appCentrale.setString(2, "BINV12");
 			appCentrale.execute();
 			appCentrale = con.prepareStatement("SELECT projet2021.encoderUeValidee(?,?)");
-			appCentrale.setString(1, "Emeline.Leconte@student.vinci.be");
+			appCentrale.setString(1, "emeline.Leconte@student.vinci.be");
 			appCentrale.setString(2, "BINV13");
 			appCentrale.execute();
 			appCentrale = con.prepareStatement("SELECT projet2021.encoderUeValidee(?,?)");
-			appCentrale.setString(1, "Emeline.Leconte@student.vinci.be");
+			appCentrale.setString(1, "emeline.Leconte@student.vinci.be");
 			appCentrale.setString(2, "BINV21");
 			appCentrale.execute();
 			appCentrale = con.prepareStatement("SELECT projet2021.encoderUeValidee(?,?)");
-			appCentrale.setString(1, "Emeline.Leconte@student.vinci.be");
+			appCentrale.setString(1, "emeline.Leconte@student.vinci.be");
 			appCentrale.setString(2, "BINV32");
 			appCentrale.execute();
 

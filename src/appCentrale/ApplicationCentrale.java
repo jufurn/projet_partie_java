@@ -14,7 +14,7 @@ public class ApplicationCentrale {
 	public static void main(String[] args) throws SQLException {
 
 		Scanner scanner = new Scanner(System.in);
-	
+		
 		//pour la selection de methodes
 		int selection;
 		AppCentraleMethodes methodes = new AppCentraleMethodes();
