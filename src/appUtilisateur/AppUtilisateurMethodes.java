@@ -1,5 +1,7 @@
 package appUtilisateur;
 
+import bcrypt.BCrypt;
+
 import java.sql.*;
 import java.util.Scanner;
 
@@ -10,6 +12,8 @@ public class AppUtilisateurMethodes {
 
     PreparedStatement appUtilisateur;
     ResultSet res;
+
+    String sel = BCrypt.gensalt();
 
     int id_etudiant = -1;
 
@@ -32,12 +36,13 @@ public class AppUtilisateurMethodes {
         System.out.println("Donnez votre email :");
         String _email = scanner.nextLine();
         System.out.println("Donner votre mot de passe : ");
-        String _mdp = scanner.nextLine();
+        String mdp = scanner.nextLine();
+        String mdpEtu = BCrypt.hashpw(mdp, sel);
         try {
             appUtilisateur = con.prepareStatement("SELECT id_etudiant FROM projet2021.etudiants " +
                     "WHERE email = ? AND mot_de_passe = ?");
             appUtilisateur.setString(1, _email);
-            appUtilisateur.setString(2, _mdp);
+            appUtilisateur.setString(2, mdpEtu);
             res = appUtilisateur.executeQuery();
             if (res.next()) {
                 id_etudiant = res.getInt(1);
