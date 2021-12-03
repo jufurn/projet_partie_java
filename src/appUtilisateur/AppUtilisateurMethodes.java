@@ -13,8 +13,6 @@ public class AppUtilisateurMethodes {
     PreparedStatement appUtilisateur;
     ResultSet res;
 
-    String sel = BCrypt.gensalt();
-
     int id_etudiant = -1;
 
     public AppUtilisateurMethodes() {
@@ -66,7 +64,7 @@ public class AppUtilisateurMethodes {
             appUtilisateur = con.prepareStatement("SELECT projet2021.ajouterUeEtudiant(?,?)");
             appUtilisateur.setInt(1,id_etudiant);
             appUtilisateur.setString(2,code);
-            res = appUtilisateur.executeQuery();
+            appUtilisateur.execute();
             System.out.println("Ajout réussit !");
         }catch (SQLException e){
             System.out.println(e.getMessage());
@@ -122,10 +120,12 @@ public class AppUtilisateurMethodes {
                     " FROM projet2021.PAEEtudiant WHERE id = ?");
             appUtilisateur.setInt(1,id_etudiant);
             res = appUtilisateur.executeQuery();
-            System.out.println("code_ue : "+ res.getString(1));
-            System.out.println("nom_ue : "+ res.getString(2));
-            System.out.println("credit_ue : "+ res.getInt(3));
-            System.out.println("bloc_ue : "+ res.getInt(4));
+            if (res.next()) {
+                System.out.println("code_ue : " + res.getString(1));
+                System.out.println("nom_ue : " + res.getString(2));
+                System.out.println("credit_ue : " + res.getInt(3));
+                System.out.println("bloc_ue : " + res.getInt(4));
+            }
         }catch (SQLException e){
             System.out.println(e.getMessage());
         }finally {
