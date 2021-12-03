@@ -93,7 +93,6 @@ public class AppCentraleMethodes {
 		System.out.println("Veuillez entrer le mot de passe de l'etudiant.");
 		String mdp = scanner.nextLine();
 		String mdpEtu = BCrypt.hashpw(mdp, sel);
-
 		try {
 			appCentrale = con.prepareStatement("SELECT projet2021.ajouterEtudiant(?,?,?,?)");
 			appCentrale.setString(1,nomEtu);
