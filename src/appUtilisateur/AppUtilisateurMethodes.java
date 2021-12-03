@@ -37,17 +37,18 @@ public class AppUtilisateurMethodes {
         String _email = scanner.nextLine();
         System.out.println("Donner votre mot de passe : ");
         String mdp = scanner.nextLine();
-        String mdpEtu = BCrypt.hashpw(mdp, sel);
         try {
-            appUtilisateur = con.prepareStatement("SELECT id_etudiant FROM projet2021.etudiants " +
-                    "WHERE email = ? AND mot_de_passe = ?");
+            appUtilisateur = con.prepareStatement("SELECT id_etudiant, mot_de_passe FROM projet2021.etudiants " +
+                    "WHERE email = ?");
             appUtilisateur.setString(1, _email);
-            appUtilisateur.setString(2, mdpEtu);
             res = appUtilisateur.executeQuery();
             if (res.next()) {
-                id_etudiant = res.getInt(1);
-                System.out.println("Connection réussie !");
-                return true;
+                String mdpuser = res.getString(2);
+                if (BCrypt.checkpw(mdp,mdpuser)){
+                    id_etudiant = res.getInt(1);
+                    System.out.println("Connection réussie !");
+                    return true;
+                }
             }
         }catch (SQLException e){
             System.out.println(e.getMessage());
