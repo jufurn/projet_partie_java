@@ -17,13 +17,13 @@ public class AppUtilisateurMethodes {
 
     public AppUtilisateurMethodes() {
         // creer connection
-        //url = "jdbc:postgresql://localhost:5432/postgres";
-        url = "jdbc:postgresql://172.24.2.6:5432/dbjulienfurnelle";
+        url = "jdbc:postgresql://localhost:5432/postgres";
+        //url = "jdbc:postgresql://172.24.2.6:5432/dbjulienfurnelle";
         con = null;
 
         try {
-            //con = DriverManager.getConnection(url, "postgres", "");
-            con = DriverManager.getConnection(url, "julienfurnelle", "PLBGNMJ.9");
+            con = DriverManager.getConnection(url, "postgres", "");
+            //con = DriverManager.getConnection(url, "julienfurnelle", "PLBGNMJ.9");
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e.getMessage());
@@ -101,13 +101,17 @@ public class AppUtilisateurMethodes {
         }
     }
     public void visualiserUesAjoutables(){
+        String[] splitedRes;
         try {
-            appUtilisateur = con.prepareStatement("SELECT code_ue, nom_ue " +
-                    "FROM projet2021.VisualiserUeAjoutable WHERE id = ?");
+            appUtilisateur = con.prepareStatement("SELECT projet2021.VisualiserUeAjoutableParEtudiant(?)");
             appUtilisateur.setInt(1,id_etudiant);
             res = appUtilisateur.executeQuery();
-            if(res.next())
-                System.out.println("code_ue : "+res.getString(1)+" nom_ue : "+res.getString(2));
+            System.out.println("Vous avez acces à ces cours :");
+            while (res.next()) {
+                splitedRes = res.getString(1).split("[(,)]+");
+                System.out.println(" Code : "+ splitedRes[1] +"     Nom : "+ splitedRes[2] +
+                        "     Crédit : "+ splitedRes[3] +"     Bloc : "+ splitedRes[4]);
+            }
         }catch (SQLException e){
             System.out.println(e.getMessage());
         }finally {
@@ -120,11 +124,13 @@ public class AppUtilisateurMethodes {
                     " FROM projet2021.PAEEtudiant WHERE id = ?");
             appUtilisateur.setInt(1,id_etudiant);
             res = appUtilisateur.executeQuery();
-            if (res.next()) {
+            System.out.println("Voici votre PAE : \n");
+            while (res.next()) {
                 System.out.println("code_ue : " + res.getString(1));
                 System.out.println("nom_ue : " + res.getString(2));
                 System.out.println("credit_ue : " + res.getInt(3));
                 System.out.println("bloc_ue : " + res.getInt(4));
+                System.out.println("\n");
             }
         }catch (SQLException e){
             System.out.println(e.getMessage());
