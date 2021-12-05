@@ -55,12 +55,11 @@ public class AppCentraleMethodes {
 			appCentrale.setInt(4,Integer.parseInt(creditsUe));
 
 			appCentrale.execute();
-			System.out.println("L'ajout a reussi. Voila les informations de l'UE : " + codeUe +" : "+ nomUe +" Bloc : "+ blocUe + " Credits : " + creditsUe);
+			System.out.println("L'ajout a réussi ! Voila les informations de l'UE : " + codeUe +" : "+ nomUe +" Bloc : "+ blocUe + " Credits : " + creditsUe);
 
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}finally {
-			System.out.println("\n");
+			System.out.println("L'ajout a échoué !");
+			//System.out.println(e.getMessage());
 		}
 	}
 
@@ -76,12 +75,13 @@ public class AppCentraleMethodes {
 			appCentrale.setString(2,codePrerequis);
 
 			appCentrale.execute();
-			System.out.println("L'ajout a reussi. Voila les informations du prerequis : " + codePrerequis + " est requis pour le cours " + codeUe);
+			System.out.println("L'ajout a reussi. Voila les informations du prerequis : " + codePrerequis
+					+ " est requis pour le cours " + codeUe);
 
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}finally {
-			System.out.println("\n");
+			System.out.println(e.getMessage().split("Où")[0]);
+			System.out.println("L'ajout à échoué !");
+			//System.out.println(e.getMessage());
 		}
 	}
 
@@ -103,12 +103,12 @@ public class AppCentraleMethodes {
 			appCentrale.setString(4,mdpEtu);
 
 			appCentrale.execute();
-			System.out.println("L'ajout a reussi. Voila les informations de l'etudiant : " + nomEtu + " " + prenomEtu + ")\nemail : "+ emailEtu + "(mdp : " + mdpEtu + ")");
+			System.out.println("L'ajout a reussi. Voila les informations de l'etudiant : " + nomEtu + " " + prenomEtu
+					+ "\n	email : "+ emailEtu + " mdp : " + mdpEtu);
 
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}finally {
-			System.out.println("\n");
+			System.out.println("L'ajoute de l'étudiant a échoué !");
+			//System.out.println(e.getMessage());
 		}
 	}
 
@@ -124,12 +124,12 @@ public class AppCentraleMethodes {
 			appCentrale.setString(2,codeUe);
 
 			appCentrale.execute();
-			System.out.println("L'ajout a reussi. Voila les informations de l'Ue validee : " + emailEtu + " a valide le cours " + codeUe);
+			System.out.println("L'ajout a reussi. Voila les informations de l'Ue validee : " + emailEtu
+					+ " a valide le cours " + codeUe);
 
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}finally {
-			System.out.println("\n");
+			System.out.println("L'ue n'as pas pu être encodée !");
+			//System.out.println(e.getMessage());
 		}
 	}
 
@@ -142,12 +142,11 @@ public class AppCentraleMethodes {
 					+ "	FROM projet2021.visualiserEtudiantsDuBloc" + " WHERE bloc = " + blocEtu);
 			ResultSet rs = appCentrale.executeQuery();
 			while(rs.next()) {
-				System.out.println(rs.getString(1) + " " + rs.getString(2) + " (PAE : " + rs.getInt(3) + " credits)");
+				System.out.println(rs.getString(1) + " " + rs.getString(2)
+						+ " PAE : " + rs.getInt(3) + " credits");
 			}
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}finally {
-			System.out.println("\n");
+			//System.out.println(e.getMessage());
 		}
 	}
 
@@ -155,15 +154,14 @@ public class AppCentraleMethodes {
 
 		try {
 			appCentrale = con.prepareStatement("SELECT nom, prenom, bloc, credits_pae"
-					+ "	FROM projet2021.visualiserCreditsPAEEtudiant");
+					+ "	FROM projet2021.visualiserCreditsPAEEtudiants");
 			ResultSet rs = appCentrale.executeQuery();
 			while(rs.next()) {
-				System.out.println(rs.getString(1) + " " + rs.getString(2) + " (Bloc " + rs.getInt(3) + ") (PAE : " + rs.getInt(4) + " credits)");
+				System.out.println(rs.getString(1) + " " + rs.getString(2)
+						+ " Bloc " + rs.getInt(3) + " PAE : " + rs.getInt(4) + " credits");
 			}
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}finally {
-			System.out.println("\n");
+			//System.out.println(e.getMessage());
 		}
 	}
 
@@ -174,12 +172,11 @@ public class AppCentraleMethodes {
 					+ "	FROM projet2021.visualiserEtudiantsPAEPasValide");
 			ResultSet rs = appCentrale.executeQuery();
 			while(rs.next()) {
-				System.out.println(rs.getString(1) + " " + rs.getString(2) + " (Credits valides : " + rs.getInt(3) + " credits)");
+				System.out.println(rs.getString(1) + " " + rs.getString(2)
+						+ " Credits valides : " + rs.getInt(3) + " credits");
 			}
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}finally {
-			System.out.println("\n");
+			//System.out.println(e.getMessage());
 		}
 	}
 
@@ -192,12 +189,11 @@ public class AppCentraleMethodes {
 					+ "	FROM projet2021.visualiserUesDuBloc WHERE bloc = " + blocEtu);
 			ResultSet rs = appCentrale.executeQuery();
 			while(rs.next()) {
-				System.out.println(rs.getString(1) + " : " + rs.getString(2) + " (Inscrits : " + rs.getInt(3) + ")");
+				System.out.println(rs.getString(1) + " : " + rs.getString(2) + " Inscrits : "
+						+ rs.getInt(3));
 			}
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}finally {
-			System.out.println("\n");
+			//System.out.println(e.getMessage());
 		}
 	}
 	
@@ -310,10 +306,9 @@ public class AppCentraleMethodes {
 			appCentrale.execute();
 
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			//System.out.println(e.getMessage());
 		}finally {
-			System.out.println("ok");
-			System.out.println("\n");
+			System.out.println("demo prête");
 		}
 	}
 }

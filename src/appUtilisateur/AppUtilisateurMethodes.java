@@ -44,14 +44,12 @@ public class AppUtilisateurMethodes {
                 String mdpuser = res.getString(2);
                 if (BCrypt.checkpw(mdp,mdpuser)){
                     id_etudiant = res.getInt(1);
-                    System.out.println("Connection réussie !");
+                    System.out.println("Connection réussit !");
                     return true;
                 }
             }
         }catch (SQLException e){
             System.out.println(e.getMessage());
-        }finally {
-            System.out.println("\n");
         }
         System.out.println("Connection échouée : email ou mot de passe incorrect !\n");
         return false;
@@ -67,9 +65,8 @@ public class AppUtilisateurMethodes {
             appUtilisateur.execute();
             System.out.println("Ajout réussit !");
         }catch (SQLException e){
-            System.out.println(e.getMessage());
-        }finally {
-            System.out.println("\n");
+            System.out.println(e.getMessage().split("Où")[0]);
+            //System.out.println(e.getMessage());
         }
     }
 
@@ -83,9 +80,8 @@ public class AppUtilisateurMethodes {
             res = appUtilisateur.executeQuery();
             System.out.println("Retrait réussit !");
         }catch (SQLException e){
-            System.out.println(e.getMessage());
-        }finally {
-            System.out.println("\n");
+            System.out.println(e.getMessage().split("Où")[0]);
+            //System.out.println(e.getMessage());
         }
     }
     public void validerPAE(){
@@ -95,9 +91,8 @@ public class AppUtilisateurMethodes {
             res = appUtilisateur.executeQuery();
             System.out.println("Validation réussie !");
         }catch (SQLException e){
-            System.out.println(e.getMessage());
-        }finally {
-            System.out.println("\n");
+            System.out.println(e.getMessage().split("Où")[0]);
+            //System.out.println(e.getMessage());
         }
     }
     public void visualiserUesAjoutables(){
@@ -113,9 +108,8 @@ public class AppUtilisateurMethodes {
                         "     Crédit : "+ splitedRes[3] +"     Bloc : "+ splitedRes[4]);
             }
         }catch (SQLException e){
-            System.out.println(e.getMessage());
-        }finally {
-            System.out.println("\n");
+            System.out.println(e.getMessage().split("Où")[0]);
+            //System.out.println(e.getMessage());
         }
     }
     public void visualiserPAEEtudiant(){
@@ -133,9 +127,8 @@ public class AppUtilisateurMethodes {
                 System.out.println("\n");
             }
         }catch (SQLException e){
-            System.out.println(e.getMessage());
-        }finally {
-            System.out.println("\n");
+            System.out.println(e.getMessage().split("Où")[0]);
+            //System.out.println(e.getMessage());
         }
     }
     public void reinitialiserPAEEtudiant(){
@@ -145,9 +138,8 @@ public class AppUtilisateurMethodes {
             res = appUtilisateur.executeQuery();
             System.out.println("Réinitialisation du PAE réussie !");
         }catch (SQLException e){
-            System.out.println(e.getMessage());
-        }finally {
-            System.out.println("\n");
+            System.out.println(e.getMessage().split("Où")[0]);
+            //System.out.println(e.getMessage());
         }
     }
 
@@ -162,5 +154,6 @@ public class AppUtilisateurMethodes {
         System.out.println("[4] Visualiser les Ues ajoutables.");
         System.out.println("[5] Visualiser le PAE.");
         System.out.println("[6] Réinitialiser le PAE.");
+        System.out.println("[7] Déconnection / Changer d'utilisateur.");
     }
 }
