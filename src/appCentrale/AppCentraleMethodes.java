@@ -79,7 +79,7 @@ public class AppCentraleMethodes {
 					+ " est requis pour le cours " + codeUe);
 
 		} catch (SQLException e) {
-			System.out.println(e.getMessage().split("Où")[0]);
+			System.out.println(e.getMessage().split("\n")[0]);
 			System.out.println("L'ajout à échoué !");
 			//System.out.println(e.getMessage());
 		}

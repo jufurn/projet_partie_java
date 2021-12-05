@@ -65,7 +65,7 @@ public class AppUtilisateurMethodes {
             appUtilisateur.execute();
             System.out.println("Ajout réussit !");
         }catch (SQLException e){
-            System.out.println(e.getMessage().split("Où")[0]);
+            System.out.println(e.getMessage().split("\n")[0]);
             //System.out.println(e.getMessage());
         }
     }
@@ -80,7 +80,7 @@ public class AppUtilisateurMethodes {
             res = appUtilisateur.executeQuery();
             System.out.println("Retrait réussit !");
         }catch (SQLException e){
-            System.out.println(e.getMessage().split("Où")[0]);
+            System.out.println(e.getMessage().split("\n")[0]);
             //System.out.println(e.getMessage());
         }
     }
@@ -91,7 +91,7 @@ public class AppUtilisateurMethodes {
             res = appUtilisateur.executeQuery();
             System.out.println("Validation réussie !");
         }catch (SQLException e){
-            System.out.println(e.getMessage().split("Où")[0]);
+            System.out.println(e.getMessage().split("\n")[0]);
             //System.out.println(e.getMessage());
         }
     }
@@ -108,7 +108,7 @@ public class AppUtilisateurMethodes {
                         "     Crédit : "+ splitedRes[3] +"     Bloc : "+ splitedRes[4]);
             }
         }catch (SQLException e){
-            System.out.println(e.getMessage().split("Où")[0]);
+            System.out.println(e.getMessage().split("\n")[0]);
             //System.out.println(e.getMessage());
         }
     }
@@ -127,7 +127,7 @@ public class AppUtilisateurMethodes {
                 System.out.println("\n");
             }
         }catch (SQLException e){
-            System.out.println(e.getMessage().split("Où")[0]);
+            System.out.println(e.getMessage().split("\n")[0]);
             //System.out.println(e.getMessage());
         }
     }
@@ -138,7 +138,7 @@ public class AppUtilisateurMethodes {
             res = appUtilisateur.executeQuery();
             System.out.println("Réinitialisation du PAE réussie !");
         }catch (SQLException e){
-            System.out.println(e.getMessage().split("Où")[0]);
+            System.out.println(e.getMessage().split("\n")[0]);
             //System.out.println(e.getMessage());
         }
     }
